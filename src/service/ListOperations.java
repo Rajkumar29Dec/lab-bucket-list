@@ -1,45 +1,34 @@
 package service;
-
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.*;
 
 import model.TouristPlace;
 
-public class ListOperations
+public class ListOperations 
 {
 	List<TouristPlace> list=new ArrayList<TouristPlace>();
-	public List<TouristPlace> add(TouristPlace places) throws IOException 
+	public List add(TouristPlace places)
 	{
 		list.add(places);
-		return list;
+		return list;	
 	}
-	
-	public List<TouristPlace> remove(TouristPlace places) throws IOException
-	{	
+	public List remove(TouristPlace places)
+	{
 		list.remove(places);
 		return list;	
 	}
-	
-	//lambda operations
-    public Object sortByDestination(List<TouristPlace> places) throws IOException 
-    {		
-      places.sort((TouristPlace p1,TouristPlace p2)-> p1.getDestination().compareTo(p2.getDestination()));
-      return places;	
-    }
-	
-    public Object sortByRank(List<TouristPlace> places) throws IOException
-    {	
-    	places.sort((TouristPlace p1,TouristPlace p2)-> p1.getRank().compareTo(p2.getRank()));
-         return places;
-    }
-
-    public Object reset(List<TouristPlace> places) throws IOException 
-	{		
-		list.clear();
-		return list;	
+	public Object sortByDestination(List<TouristPlace> places)
+	{
+	     list.sort((TouristPlace s1,TouristPlace  s2)->s1.getDestination().compareTo(s2.getDestination()));
+		return list;
 	}
-
+	public Object sortByRank(List<TouristPlace> places)
+	{
+		 list.sort((TouristPlace tp1,TouristPlace tp2)->tp1.getRank().compareTo(tp2.getRank()));
+		return list;
+	}
+	public Object reset(List<TouristPlace> places)
+	{
+		list.clear();
+		return list;
+	}
 }

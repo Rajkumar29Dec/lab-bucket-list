@@ -18,7 +18,8 @@ import service.ListOperations;
 
 public class SetServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+	// Create a set 
+	Set<TouristPlace> set=new HashSet<TouristPlace>();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String name = request.getParameter("name");
 		String destination = request.getParameter("travel");
@@ -30,10 +31,15 @@ public class SetServlet extends HttpServlet {
 		String remove = request.getParameter("delete");
 		String reset = request.getParameter("reset");
 		
-		if(add!=null) {
+		// Create an object for TouristPlace
+		TouristPlace tp = new TouristPlace(name,destination,rank);
+		SetOperations so=new SetOperations();
+		
+		if(add!=null) 
+		{
 			// call the add method and store the return value in a set variable
-			
-			request.setAttribute("bucketListadd", /*pass the return value */);
+			  set= so.add(tp);
+			request.setAttribute("bucketListadd",set);
 			request.setAttribute("message", "user added successfully");
 			RequestDispatcher rd=this.getServletContext().getRequestDispatcher("/WEB-INF/views/list.jsp");
 			rd.forward(request, response);
@@ -41,49 +47,39 @@ public class SetServlet extends HttpServlet {
 
 		if(remove!=null) {
 			// call the remove method and store the return value in a set variable
-			
-			
-			request.setAttribute("bucketListremove", /*pass the return value */);
+			 set=so.remove(tp);
+			request.setAttribute("bucketListremove", set);
 			RequestDispatcher rd=this.getServletContext().getRequestDispatcher("/WEB-INF/views/list.jsp");
 			rd.forward(request, response);
 		}
 
 		
-		if(sortbydestination!=null) {
+		if(sortbydestination!=null)
+		{
 			// call the sortByDestination method and store the return value in a set variable
-			
-			
-			request.setAttribute("bucketList", /*pass the return value */);
+			TreeSet<TouristPlace>  se=(TreeSet<TouristPlace>) so.sortByDestination(set);
+			request.setAttribute("bucketList", se);
 			RequestDispatcher rd=this.getServletContext().getRequestDispatcher("/WEB-INF/views/list.jsp");
 			rd.forward(request, response);
 		}
 
 		if(sortbyrank!=null) {
 			// call the sortByRank method and store the return value in a set variable
-			
-			request.setAttribute("bucketList", /*pass the return value */);
+		TreeSet<TouristPlace> s= (TreeSet<TouristPlace>) so.sortByRank(set);
+			request.setAttribute("bucketList",s);
 			RequestDispatcher rd=this.getServletContext().getRequestDispatcher("/WEB-INF/views/list.jsp");
 			rd.forward(request, response);
 		}
 
 		if(reset!=null) {
 			// call the reset method and store the return value in a set variable
-			
-			request.setAttribute("bucketList", /*pass the return value */);
+			   Set<TouristPlace> s =(Set<TouristPlace>) so.reset(set);
+			request.setAttribute("bucketList",s);
 			RequestDispatcher rd=this.getServletContext().getRequestDispatcher("/WEB-INF/views/list.jsp");
 			rd.forward(request, response);
 		}
-
-	
-	
 	}
-
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		doGet(request, response);
 	}
-
-
-
 }
